@@ -29,12 +29,11 @@ SECRET_KEY = os.environ.get(
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
 # Déploiement sur Vercel
-ALLOWED_HOSTS = os.environ.get(
-    "ALLOWED_HOSTS", "financeai-navy.vercel.app,localhost,127.0.0.1"
-).split(",")
-
-
-# Application definition
+ALLOWED_HOSTS = (
+    os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+    if not os.environ.get("VERCEL")
+    else ["*"]
+)
 
 
 # Application definition
@@ -87,7 +86,7 @@ WSGI_APPLICATION = "FinanceAI.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": os.environ.get("DATABASE_URL", BASE_DIR / "db.sqlite3"),
     }
 }
 
