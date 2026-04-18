@@ -73,9 +73,9 @@
     <h3>🔍 Facteurs d'Influence - Importance des Variables</h3>
     <p class="section-description">Variables ayant le plus d'impact sur les prédictions de risque</p>
     <h4>Vue Interactive</h4>
-    <div class="chart-wrapper">
-        <div class="confusion-grid">
-            <div class="chart-card">
+    <div class="chart-wrapper" style="behavior: scroll;scrollbar-width: thin;overflow: auto;display:flex;gap:20px;">
+        <div class="confusion-grid" style="display:flex;gap:20px;">
+            <div class="chart-card" width="50%">
                 <div class="" style="behavior: scroll;scrollbar-width: thin;overflow: auto;">
                     {{ feature_plot_html|safe }}
                 </div>
