@@ -1,0 +1,143 @@
+{% extends "prediction/base.html" %}
+
+{% block content %}
+<h2 class="section-title">Dashboard du modèle</h2>
+<p>Résumé de la performance du modèle et des variables les plus influentes.</p>
+
+<!-- Section 1: Métriques clés pour les décideurs -->
+<div class="metric-card highlight-card">
+    <h3>📊 Métriques Clés de Performance</h3>
+    <div class="stats-grid">
+        <div class="stat-card primary">
+            <p class="stat-title">Accuracy du Modèle</p>
+            <p class="stat-value">{{ accuracy|floatformat:2 }}%</p>
+            <p class="stat-subtitle">Précision globale sur les données de test</p>
+        </div>
+        <div class="stat-card warning">
+            <p class="stat-title">Taux de Défaut Global</p>
+            <p class="stat-value">{{ default_rate|floatformat:2 }}%</p>
+            <p class="stat-subtitle">Proportion de clients à risque</p>
+        </div>
+        <div class="stat-card info">
+            <p class="stat-title">Clients Fiables</p>
+            <p class="stat-value">{{ target_counts.0|default:'0' }}</p>
+            <p class="stat-subtitle">{{ target_rates.0|default:'0.00' }}% du total</p>
+        </div>
+        <div class="stat-card danger">
+            <p class="stat-title">Clients à Risque</p>
+            <p class="stat-value">{{ target_counts.1|default:'0' }}</p>
+            <p class="stat-subtitle">{{ target_rates.1|default:'0.00' }}% du total</p>
+        </div>
+    </div>
+</div>
+
+<!-- Section 2: Distribution des données -->
+<div class="section">
+    <h3>📈 Distribution de la Variable Cible</h3>
+    <p class="section-description">Répartition des clients selon leur risque de défaut</p>
+    <div class="chart-wrapper">
+        <div class="confusion-grid" style="behavior: scroll;scrollbar-width: thin;overflow: auto;">
+            {{ target_dist_plot_html|safe }}
+        </div>
+    </div>
+</div>
+
+<!-- Section 3: Performance détaillée -->
+<div class="">
+    <h3>🎯 Performance du Modèle - Matrice de Confusion</h3>
+    <p class="section-description">Analyse détaillée des prédictions correctes et erreurs</p>
+    <div class="">
+
+        <div class="visualization-item">
+            <div class="confusion-grid">
+                <h4>Résumé Numérique</h4>
+                <div class="confusion-grid">
+                    <div class="confusion-cell confusion-header"></div>
+                    <div class="confusion-cell confusion-header">Prédit Fiable</div>
+                    <div class="confusion-cell confusion-header">Prédit Risque</div>
+                    <div class="confusion-cell confusion-header">Réel Fiable</div>
+                    <div class="confusion-cell">{{ confusion_matrix.0.0 }}</div>
+                    <div class="confusion-cell">{{ confusion_matrix.0.1 }}</div>
+                    <div class="confusion-cell confusion-header">Réel Risque</div>
+                    <div class="confusion-cell">{{ confusion_matrix.1.0 }}</div>
+                    <div class="confusion-cell">{{ confusion_matrix.1.1 }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Section 4: Facteurs influents -->
+<div class="section">
+    <h3>🔍 Facteurs d'Influence - Importance des Variables</h3>
+    <p class="section-description">Variables ayant le plus d'impact sur les prédictions de risque</p>
+    <h4>Vue Interactive</h4>
+    <div class="chart-wrapper">
+        <div class="confusion-grid">
+            <div class="chart-card">
+                <div class="" style="behavior: scroll;scrollbar-width: thin;overflow: auto;">
+                    {{ feature_plot_html|safe }}
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="" style="behavior: scroll;scrollbar-width: thin;overflow: auto;">
+                    {{ confusion_plot_html|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Section 5: Détails techniques (optionnel pour les experts) -->
+<div class="metric-card technical-section">
+    <h3>📋 Rapport de Classification Détaillé</h3>
+    <p class="section-description">Métriques techniques par classe (optionnel pour les utilisateurs avancés)</p>
+    <div class="classification-report"  style="behavior: scroll;scrollbar-width: thin;overflow: auto;">
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th>Classe</th>
+                    <th>Précision</th>
+                    <th>Rappel</th>
+                    <th>F1-Score</th>
+                    <th>Support</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for class_name, metrics in classification_report.items %}
+                {% if class_name != 'accuracy' and class_name != 'macro avg' and class_name != 'weighted avg' %}
+                <tr>
+                    <td>
+                        {% if class_name == '0' %}Fiable{% elif class_name == '1' %}À Risque{% else %}{{ class_name }}{% endif %}
+                    </td>
+                    <td>{{ metrics.precision|floatformat:3 }}</td>
+                    <td>{{ metrics.recall|floatformat:3 }}</td>
+                    {% comment %} <td>{{ metrics.f1-score|floatformat:3 }}</td> {% endcomment %}
+                    <td>{{ metrics.support }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="report-summary">
+            <p><strong>Accuracy globale du modèle :</strong> {{ classification_report.accuracy|floatformat:3 }}</p>
+        </div>
+    </div>
+</div>
+
+{% if feature_importance_pairs %}
+<div class="metric-card technical-section">
+    <h3>📊 Liste Détaillée des Variables</h3>
+    <p class="section-description">Classement complet par ordre d'importance</p>
+    <ul class="feature-list">
+        {% for name, importance in feature_importance_pairs %}
+        <li>
+            <span class="feature-name">{{ name }}</span>
+            <span class="feature-value">{{ importance|floatformat:4 }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endblock %}

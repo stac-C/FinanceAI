@@ -1,0 +1,35 @@
+{% extends "prediction/base.html" %}
+
+{% block content %}
+<div class="section-header">
+    <h2 class="section-title">Prédiction de défaut de crédit</h2>
+    <p>Entrez les informations du client pour estimer le risque de défaut sur le prêt.</p>
+</div>
+
+<form method="post" novalidate>
+    {% csrf_token %}
+    <div class="form-grid">
+        {% for field in form %}
+        <div class="form-field">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+            <div class="field-errors">{{ field.errors }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="submit-row">
+        <button class="button" type="submit">Obtenir la prédiction</button>
+    </div>
+</form>
+
+{% if prediction is not None %}
+<div class="result-card">
+    <h3>Résultat de la prédiction</h3>
+    <p><strong>Statut :</strong> <span class="badge {% if prediction == 1 %}risk{% else %}safe{% endif %}">{% if prediction == 1 %}Client à risque{% else %}Client fiable{% endif %}</span></p>
+    <p><strong>Probabilité de défaut :</strong> {{ probability|floatformat:2 }}%</p>
+</div>
+{% endif %}
+{% endblock %}

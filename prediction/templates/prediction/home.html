@@ -1,0 +1,38 @@
+{% extends "prediction/base.html" %}
+
+{% block content %}
+<div class="section-header">
+    <h2 class="section-title">Bienvenue sur FinanceAI</h2>
+    <p>Découvrez la solution de prédiction de défaut de prêt et accédez rapidement aux outils de décision.</p>
+</div>
+
+<div class="section-description">
+    <p>FinanceAI vous aide à évaluer le risque client en quelques clics, avec une interface claire et des analyses visuelles.</p>
+</div>
+
+<div class="chart-grid">
+    <div class="chart-card highlight-card">
+        <h3>Commencer</h3>
+        <p>Remplissez le formulaire de prédiction pour estimer le risque de défaut d'un dossier.
+        </p>
+        <p><a class="button" href="{% url 'prediction:predict' %}">Aller à la prédiction</a></p>
+    </div>
+    <div class="chart-card primary">
+        <h3>Analyse du modèle</h3>
+        <p>Visualisez la performance du modèle et les variables qui impactent le plus les résultats.</p>
+        <p><a class="button" href="{% url 'prediction:dashboard' %}">Voir le dashboard</a></p>
+    </div>
+</div>
+
+<div class="metric-card info">
+    <h3>Points clés</h3>
+    <ul class="feature-list">
+        <li><span class="feature-name">Interface simple</span><span class="feature-value">Navigation rapide</span></li>
+        <li><span class="feature-name">Risque de défaut</span><span class="feature-value">Prédictions instantanées</span></li>
+        <li><span class="feature-name">Performance</span><span class="feature-value">Métriques et graphes</span></li>
+        {% if top_features %}
+        <li><span class="feature-name">Variables clés</span><span class="feature-value">{{ top_features|join:", " }}</span></li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}

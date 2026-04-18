@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinanceAI - Prédiction de défaut</title>
+    <link rel="icon" href="{% static 'prediction/financeai.ico' %}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'prediction/style.css' %}">
+    <meta name="description" content="FinanceAI - Prédiction intelligente du défaut de prêt, avec indicateurs de risque clairs pour une décision bancaire fiable.">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="site-brand">
+                <h1>FinanceAI</h1>
+                <p>Prédiction intelligente du défaut de prêt, avec indicateurs de risque clairs pour une décision bancaire fiable.</p>
+            </div>
+            <nav class="nav-links">
+                <a class="nav-link" href="{% url 'prediction:home' %}">Accueil</a>
+                <a class="nav-link" href="{% url 'prediction:predict' %}">Prédiction</a>
+                <a class="nav-link" href="{% url 'prediction:dashboard' %}">Dashboard</a>
+            </nav>
+        </header>
+
+        <main class="card">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer>
+            <p>FinanceAI • Solution de monitoring de risque de prêt</p>
+        </footer>
+    </div>
+</body>
+</html>
