@@ -6,10 +6,12 @@
       "dest": "api/index.py"
     }
   ],
+
   "functions": {
-    "api/index.py": {
-      "maxDuration": 30
+    "api/*.py": {
+      "runtime": "python3.9"
     }
   },
+  
   "buildCommand": "python manage.py collectstatic --noinput && python manage.py migrate --noinput"
 }
