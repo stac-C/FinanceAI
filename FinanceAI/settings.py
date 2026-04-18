@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-=w_rj^*4%_hl#++g7vka)u4*1hl$y8j*x#&16ygjta*i7*5qh*"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # deployement sur vercel
 ALLOWED_HOSTS = ["financeai.vercel.app", "localhost", "127.0.0.1"]
