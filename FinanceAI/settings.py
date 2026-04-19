@@ -30,7 +30,9 @@ DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
 # Déploiement sur Vercel
 ALLOWED_HOSTS = (
-    os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+    os.environ.get(
+        "ALLOWED_HOSTS", "localhost,127.0.0.1,192.168.2.3,182.168.2.4,192.168.0.105,"
+    ).split(",")
     if not os.environ.get("VERCEL")
     else ["*"]
 )

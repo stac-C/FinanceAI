@@ -32,15 +32,15 @@ def predict(request):
     if request.method == "POST" and form.is_valid():
         model, preprocess, _ = load_artifacts()
         input_data = [
-            form.cleaned_data["age"],
-            form.cleaned_data["experience"],
             form.cleaned_data["revenus"],
-            form.cleaned_data["famille"],
             form.cleaned_data["ccavg"],
+            form.cleaned_data["experience"],
             form.cleaned_data["education"],
+            form.cleaned_data["famille"],
             form.cleaned_data["pret_immobilier"],
-            form.cleaned_data["compte_de_titres"],
             form.cleaned_data["compte_cd"],
+            form.cleaned_data["compte_de_titres"],
+            form.cleaned_data["age"],
             form.cleaned_data["en_ligne"],
             form.cleaned_data["carte_de_credit"],
         ]

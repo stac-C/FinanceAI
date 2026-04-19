@@ -8,15 +8,15 @@ PREPROCESS_FILE = MODEL_DIR / "preprocess.pkl"
 METADATA_FILE = MODEL_DIR / "metadata.pkl"
 
 FEATURE_ORDER = [
-    "Age",
-    "Expérience",
     "Revenus",
-    "Famille",
     "CCAvg",
     "Education",
     "Pret Immobilier",
     "Compte de titres",
     "Compte CD",
+    "Age",
+    "Expérience",
+    "Famille",
     "En ligne",
     "Carte de credit",
 ]

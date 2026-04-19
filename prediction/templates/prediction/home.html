@@ -1,26 +1,49 @@
 {% extends "prediction/base.html" %}
 
 {% block content %}
-<div class="section-header">
-    <h2 class="section-title">Bienvenue sur FinanceAI</h2>
-    <p>Découvrez la solution de prédiction de défaut de prêt et accédez rapidement aux outils de décision.</p>
+<div class="hero">
+    <div class="hero-copy">
+        <span class="eyebrow">Accueil</span>
+        <h2 class="hero-title">Bienvenue sur FinanceAI</h2>
+        <p class="hero-text">FinanceAI vous aide à piloter le risque de défaut de prêt avec rapidité, transparence et confiance.</p>
+        <div class="hero-actions">
+            <a class="button" href="{% url 'prediction:predict' %}">Démarrer une prédiction</a>
+            <a class="button button-secondary" href="{% url 'prediction:dashboard' %}">Voir le dashboard</a>
+        </div>
+    </div>
+    <div class="hero-summary">
+        <div class="summary-pill">
+            <span>Précision du modèle</span>
+            <strong>{{ accuracy|default:"--" }}%</strong>
+        </div>
+        <div class="summary-pill">
+            <span>Taux de défaut</span>
+            <strong>{{ default_rate|default:"--" }}%</strong>
+        </div>
+        <div class="summary-pill">
+            <span>Variables clés</span>
+            <strong>{% if top_features %}{{ top_features|join:", " }}{% else %}Aucun{% endif %}</strong>
+        </div>
+    </div>
 </div>
 
-<div class="section-description">
-    <p>FinanceAI vous aide à évaluer le risque client en quelques clics, avec une interface claire et des analyses visuelles.</p>
+<div class="section-header">
+    <h2 class="section-title">Comment ça marche</h2>
+    <p>Suivez ces trois étapes simples pour obtenir une évaluation claire du risque et démarrer vos analyses.</p>
 </div>
 
 <div class="chart-grid">
     <div class="chart-card highlight-card">
-        <h3>Commencer</h3>
-        <p>Remplissez le formulaire de prédiction pour estimer le risque de défaut d'un dossier.
-        </p>
-        <p><a class="button" href="{% url 'prediction:predict' %}">Aller à la prédiction</a></p>
+        <h3>1. Renseignez les données</h3>
+        <p>Complétez les informations de l’emprunteur et du dossier pour générer une estimation fiable.</p>
     </div>
     <div class="chart-card primary">
-        <h3>Analyse du modèle</h3>
-        <p>Visualisez la performance du modèle et les variables qui impactent le plus les résultats.</p>
-        <p><a class="button" href="{% url 'prediction:dashboard' %}">Voir le dashboard</a></p>
+        <h3>2. Analysez le score</h3>
+        <p>Consultez les résultats de prédiction et identifiez facilement les dossiers à surveiller.</p>
+    </div>
+    <div class="chart-card">
+        <h3>3. Décidez en confiance</h3>
+        <p>Utilisez les indicateurs et le dashboard pour appuyer vos décisions de crédit.</p>
     </div>
 </div>
 
@@ -29,7 +52,7 @@
     <ul class="feature-list">
         <li><span class="feature-name">Interface simple</span><span class="feature-value">Navigation rapide</span></li>
         <li><span class="feature-name">Risque de défaut</span><span class="feature-value">Prédictions instantanées</span></li>
-        <li><span class="feature-name">Performance</span><span class="feature-value">Métriques et graphes</span></li>
+        <li><span class="feature-name">Performance</span><span class="feature-value">Métriques claires</span></li>
         {% if top_features %}
         <li><span class="feature-name">Variables clés</span><span class="feature-value">{{ top_features|join:", " }}</span></li>
         {% endif %}
